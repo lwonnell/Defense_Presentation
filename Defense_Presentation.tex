@@ -1,0 +1,1796 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Beamer Presentation
+% LaTeX Template
+% Version 1.0 (10/11/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------------------------
+%	PACKAGES AND THEMES
+%----------------------------------------------------------------------------------------
+
+\documentclass{beamer}
+
+\mode<presentation> 
+
+% The Beamer class comes with a number of default slide themes
+% which change the colors and layouts of slides. Below this is a list
+% of all the themes, uncomment each in turn to see what they look like.
+
+%\usetheme{default}
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{Dresden}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+% As well as themes, the Beamer class has a number of color themes
+% for any slide theme. Uncomment each of these in turn to see how it
+% changes the colors of your current slide theme.
+
+%\usecolortheme{albatross}
+%\usecolortheme{beaver}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dolphin}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{lily}
+%\usecolortheme{orchid}
+%\usecolortheme{rose}
+%\usecolortheme{seagull}
+%\usecolortheme{seahorse}
+%\usecolortheme{whale}
+%\usecolortheme{wolverine}
+
+%\setbeamertemplate{footline} % To remove the footer line in all slides uncomment this line
+%\setbeamertemplate{footline}[page number] % To replace the footer line in all slides with a simple slide count uncomment this line
+
+%\setbeamertemplate{navigation symbols}{} % To remove the navigation symbols from the bottom of all slides uncomment this line
+
+
+\usepackage{graphicx} % Allows including images
+\usepackage{booktabs} % Allows the use of \toprule, \midrule and \bottomrule in tables
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage[makeroom]{cancel}
+\usepackage{bm}
+\usepackage[export]{adjustbox}
+\usepackage{caption}
+\captionsetup[figure]{labelformat=empty}
+\usepackage{subcaption}
+\usepackage{multicol}
+\usepackage{animate}
+\definecolor{ao(english)}{rgb}{0.0, 0.5, 0.0}
+
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\title[Kinetic Analysis of MCT]{A kinetic analysis of morphing continuum theory 
+for fluid flows} % %The 
+%short title appears at the bottom of every slide, the full title is only on 
+%the title page
+
+\author[Wonnell]{\Large Louis Blais Wonnell} % Your name
+\vspace{50mm}
+\institute[K-State] % Your institution as it will appear on the bottom of slide,
+{\large Major Professor: Dr. James Chen \\ 
+\medskip
+\normalsize Department of Mechanical and Nuclear 
+Engineering, \\ Kansas State University \\ % Your institution for the title page
+\medskip
+%\textit{lwonnell@ksu.edu} % Your email address
+}
+\date[PhD Defense]
+{\large April 20th, 
+2018} % Date, can be %changed to a custom date
+\begin{document}
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+\begin{frame}
+\titlepage % Print the title page as the first slide
+\end{frame}
+
+% \begin{frame}
+% \frametitle{Compressible Flow Simulations} % Table of contents slide, comment this block out to remove it
+% To test the effectiveness of numerical MCT simulations on compressible flow, the 
+% case of uniform flow over a stationary cylinder will be investigated. The intent 
+% is to simulate the vortex shedding frequency, through the Strouhal number, as a 
+% function of the Reynolds number, and compare with experimental data. For this 
+% verification process, experimental data will come from Roshko's experiments on a 
+% circular cylinder using the Southern California Co-operative Wind Tunnel 
+% (CWT)\footnote{Roshko, 1960).\end{frame}
+\begin{frame}
+\frametitle{Agenda}
+\begin{multicols}{2}
+\begin{figure}
+ \includegraphics[width=.57\linewidth]{LiquidCrystals.jpg}
+ \caption{\tiny (PeerScientist, 2017)}
+\end{figure}
+ \begin{figure}
+\includegraphics[width=.6\linewidth]{kineticgases.jpg}
+\caption{\tiny (myChemset.com)}
+\end{figure}
+\end{multicols}
+\begin{multicols}{2}
+  \centering
+  \begin{itemize}
+  \small
+  \item Motivation: Efficient Modeling of Flows with Local Rotation 
+   \item Previous Efforts to Improve Direct Numerical Simulation (DNS)
+   \item A Multi-scale Approach: Morphing Continuum Theory (MCT)
+   \item Kinetic Theory and the Physics of MCT
+   \item Assessing the Equations: Numerical Results of MCT
+   \item Discussion
+   \item Conclusion and Future Work
+  \end{itemize}
+\end{multicols}
+\end{frame}
+
+
+%----------------------------------------------------------------------------------------
+%	PRESENTATION SLIDES
+%----------------------------------------------------------------------------------------
+
+%------------------------------------------------
+ % Sections can be created in order to organize your 
+%presentation into discrete blocks, all sections and subsections are 
+%automatically printed in the table of contents as an overview of the talk
+%------------------------------------------------
+
+%\subsection{Subsection Example} % A subsection can be created just before a set 
+%of slides with a common theme to further break down your presentation into
+
+\begin{frame}
+ \frametitle{Motivation: Efficient Modeling of Flows with Local Rotation}
+ \begin{multicols}{2}
+  \begin{figure}
+   \includegraphics[width=\linewidth]{Hypersonic_Flow_Ivey_2011.png}
+%    \caption{(Ivey, 2011)}
+  \caption{\tiny (Ivey et al, 2011)}
+  \end{figure}
+  \begin{figure}
+   \includegraphics[width=\linewidth]{NASAflowcyl.jpg}
+%    \caption{(NASA, 2015)}
+   \caption{\tiny (NASA, 2015)}
+  \end{figure}
+ \end{multicols}
+\end{frame}
+
+\begin{frame}
+\frametitle{Previous Approaches to Improve DNS}
+\textbf{\Large Direct Numerical Simulation (DNS)}
+\begin{multicols}{2}
+\begin{itemize}
+\item \textbf{Constraint 1}: Number of elements in mesh, $N$, and mesh element 
+size $h$, must satisfy $Nh > L$, for integral length scale $L$ (i.e. box length)
+\pause
+\item \textbf{Constraint 2}: Mesh element size $h$ must be smaller than 
+smallest physical length scale $\eta$
+\pause
+\item \textbf{Computational cost} rises when $\eta$ is small and $L$ is large
+\pause
+\item \textit{Atmospheric Turbulence}: $\eta \sim 0.1mm$ while $L \sim
+10 km$ $\rightarrow$ \textbf{Large range of eddy scales}
+\end{itemize}
+\begin{figure}
+ \includegraphics[width=.55\linewidth]{Atmospheric-Turbulence.jpg}
+ \caption{\tiny (Shats, 2012) }
+\end{figure}
+\end{multicols}
+\end{frame}
+\begin{frame}
+\frametitle{Previous Approaches to Improve DNS}
+\textbf{\Large Direct Numerical Simulation}
+\begin{multicols}{2}
+\begin{itemize}
+\item \textit{Vortex Flow}: $\eta$ might represent length of vortex core, 
+$\eta$ not clear due to problem of identifying vortices
+\item Real flows are \textbf{multi-scale}, requiring flexibility in numerical approach
+\end{itemize}
+\begin{figure}
+ \includegraphics[width=\linewidth]{vortexaneurysm.jpg}
+ \caption{\tiny (Elster, 2017)}
+\end{figure}
+\end{multicols}
+\end{frame}
+\begin{frame}
+ \frametitle{Previous Approaches to Improve DNS}
+ \begin{table}[t!]
+ \begin{tabular}{|| c | c | c ||}
+  \hline
+  Method & Approach & Contribution \\ [0.5ex]
+  \hline\hline
+  RANS & \scriptsize Average N-S eq's & \scriptsize Distinguishes mean flow from fluctuation\\
+  \hline
+  LES & \scriptsize Filter N-S eq's & \scriptsize Reduces cost associated with subgrid modeling\\
+  \hline
+  DES & \scriptsize Combines RANS and LES & \scriptsize Keeps more physics at subgrid scales where relevant \\
+  \hline
+ \end{tabular}
+ \end{table}
+  \begin{figure}
+  \includegraphics[width=.375\linewidth]{MeshScales.png}
+ \end{figure}
+\end{frame}
+\begin{frame}
+\frametitle{Previous Approaches to Improve DNS}
+ \begin{figure}
+  \includegraphics[width=.9\linewidth]{ModelPyramid.jpg}
+ \end{figure}
+ %\end{multicols}
+\end{frame}
+\begin{frame}
+ \frametitle{Previous Approaches to Improve DNS}
+ \Large
+ Drawbacks
+ \pause
+ \begin{itemize}
+  \item Limits range of parameters for simulation
+  \item Require \textbf{closure models}
+  \item Nature of closure models may be \textit{ad-hoc}
+  \item Models modified when new data emerges
+ \end{itemize}
+ \vspace{5mm}
+ \pause
+ Desire for a \textbf{multiscale} theory that eases burden of mesh refinement
+\end{frame}
+
+\begin{frame}
+\Large
+Motion and deformation of particles built into fluid picture
+\frametitle{A Multi-scale Approach: Morphing Continuum Theory (MCT)}
+\begin{multicols}{2}
+\begin{figure}
+\includegraphics[width=1.1\linewidth]{CoordinatesMCT.jpg}
+\end{figure}
+\large
+\textbf{Vector Relations}
+\begin{equation*} %\label{direc1}
+%\begin{split}
+\centering
+{\it x_{k} = x_{k} (X_{K},t)}
+\quad
+{\it  X_{K} = X_{K} (x_{k},t)}
+\end{equation*}
+\begin{equation*} %\label{direc2}
+\centering
+{\it \xi_{k} = \chi_{kK}(X_{K},t)\Xi_{K}}
+\quad
+{\it \Xi_{K} =  \bar{\chi}_{Kk}\xi_{k}}
+\end{equation*}
+\begin{equation*} %\label{direc3}
+\centering
+{\it K = 1, 2, 3} 
+\quad
+{\it  k = 1, 2, 3 }
+\end{equation*}
+\textbf{Deformation Rates}
+\begin{equation*}
+ a_{kl}  = v_{l,k} + \epsilon_{lkm}\omega_{m}
+\end{equation*}
+\begin{equation*}
+ b_{kl} = \omega_{k,l}
+\end{equation*}
+\end{multicols}
+\end{frame}
+
+\begin{frame}
+\frametitle{A Multi-scale Approach: Morphing Continuum Theory (MCT)}
+\centering
+\begin{multicols}{2}
+%\begin{equation}
+\textbf{Continuity}
+$$\frac{\partial \rho}{\partial t} + (\rho v_{i})_{,i} = 0$$\\
+%\end{equation}
+%\begin{equation}
+\textbf{Linear Momentum}
+$$t_{lk,l} + \rho f_{k} =  \rho {\dot{v}}_{ k} $$\\
+%\end{equation}
+%\begin{equation}
+%\end{equation} 
+\textbf{Angular Momentum}
+$$ m_{lk,l} + \epsilon_{kij}t_{ij} + \rho l_{k} = \rho j\dot{\omega}_{ k}$$\\
+%\begin{equation}
+\textbf{Energy}
+$$\rho \dot{e} - t_{kl}a_{kl} - m_{kl}b_{lk} + q_{k,k} - \rho h = 0$$\\
+\end{multicols}
+\begin{multicols}{2}
+\begin{itemize}
+\item $t_{lk}$: Cauchy stress 
+\item $m_{lk}$: Moment stress 
+\item $j$: Microinertia of particles
+\item $a_{bkl}, b_{kl}$: Defomation Rates
+\item $q_{k}$: Heat flux
+\item $h$: Energy source density
+\item $e$: Internal energy density
+\end{itemize}
+\end{multicols}
+%\end{equation} 
+\end{frame}
+
+\begin{frame}
+\frametitle{A Multi-scale Approach: Morphing Continuum Theory (MCT)}
+\small
+Constitutive equations derived from Clausius-Duhem Inequality for isotropic 
+fluids. Stress tensors must be frame-indifferent or \textbf{objective}.
+\begin{multicols}{2}
+\centering
+\textbf{\large Cauchy Stress}
+\normalsize
+$$t_{kl} = -P\delta_{kl} + \lambda tr(a_{mn})\delta_{kl} + (\mu + {\color{blue}\kappa})a_{kl} + \mu a_{lk} $$\\
+\textbf{\large Moment Stress}
+\normalsize
+{\color{violet}$$m_{kl} = \frac{\alpha_{T}}{\theta} \epsilon_{klm} \theta_{,m} + \alpha tr(b_{mn})\delta_{kl} + \beta b_{kl} + \gamma b_{lk} $$}\\
+\textbf{\large Heat Flux}
+\normalsize
+$$q_{k} = \frac{K}{\theta}\theta_{,k} + 
+{\color{red}\alpha_{T}\epsilon_{klm}\omega_{m,l} } $$\\
+\textbf{\large Deformation Rates}
+$$ a_{kl}  = v_{l,k} + {\color{magenta}\epsilon_{lkm}\omega_{m}}$$
+{\color{violet}$$ b_{kl} = \omega_{k,l} $$}
+\end{multicols}
+\end{frame}
+\begin{frame}
+\frametitle{A Multi-scale Approach: Morphing Continuum Theory (MCT)}
+\small
+Now have independent equation governing \textbf{gyration} of 
+particles. The coefficient $\color{blue} \kappa$ ties particle rotation to 
+linear momentum equation. 
+\vfill
+\centering
+\textbf{Linear Momentum}
+\normalsize
+$$-P_{,k} + (\lambda + \mu)v_{l,lk} + (\mu + {\color{blue}\kappa})v_{k,ll} + {\color{blue}\kappa\epsilon_{klm}\omega_{l,m}} = \rho\dot{v}_{k}$$ \\
+\textbf{\color{violet}Angular Momentum}
+\normalsize
+$$\it (\alpha + \beta)\omega_{l,lk} + \gamma \omega_{k,ll} + 
+{\color{blue}\kappa(\overbrace{\epsilon_{klm}v_{l,m} - 
+2\omega_{k})}^{{\color{black}Absolute \ Rotation}}} = \rho j\dot{\omega}_{k}  
+$$\\
+\pause
+\textbf{Energy}
+$$({\color{blue}t_{kl}}v_{l})_{,k} + {\color{violet}(m_{kl}\omega_{l})_{,k}} - q_{k,k} + \rho h  = \rho{\color{cyan}\dot{E}} $$ \\
+\textnormal
+where $E = e + \frac{1}{2}(v_{l}v_{l} + {\color{cyan}j\omega_{l}\omega_{l}})$ 
+now contains rotational kinetic energy. 
+\end{frame}
+
+\begin{frame}
+ \frametitle {Kinetic Theory and the Physics of MCT}
+ \Large
+ New coefficients in MCT are \textbf{mathematical consequences} from C-D 
+inequality and Axiom of Objectivity \pause $\rightarrow$ No inherent physical 
+meaning \\
+\pause
+\vspace{5mm}
+In classical theory, kinematic viscosity, $\mu$, often depends on 
+\textbf{temperature} \pause $\rightarrow$ Kinetic Theory shows this dependence 
+(Huang, 1987) \\
+\vspace{5mm}
+\pause
+To give new terms in MCT a deeper physical meaning \pause $\rightarrow$ Kinetic 
+Theory for gases composed of rotating particles
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Kinetic Theory and the Physics of MCT}
+\large
+\textbf{Basic Approach of Kinetic Theory}
+\begin{itemize}
+\item Assess the behavior of a fluid by modeling an aggregation of particles 
+(atoms or molecules)
+\item Precise position or motion of any particle is not determined
+\item When the number of particles is large enough $\rightarrow$ 
+\textbf{Probability Distribution} models collective behavior of particles
+%\item Important to define \textbf{phase space}
+\item Distribution reformulated depending on nature of particles
+\item Bottom-up approach to obtaining governing equations for fluid motion 
+\end{itemize}
+\pause
+\end{frame}
+
+\begin{frame}
+
+\frametitle{Kinetic Theory and the Physics of MCT}
+
+\textbf{\large Maxwell-Boltzmann Theory}
+\begin{multicols}{2}
+
+\begin{figure}
+ \includegraphics[width=45mm]{Boltzmann.png}
+\end{figure}
+\small
+\centering
+(Bhardwaj, 2014) 
+\begin{itemize}
+ \item Focused on case of monatomic gases or point particles
+ \item \textbf{Mean free path} small compared to characteristic length of 
+system 
+$\rightarrow$ Reasonably large number of collisions
+ \item Variables of interest: $x_{i}$, $v_{i}$, $t$
+ \item Mean velocity $U_{i}$, mean thermal energy $\theta$ and number density 
+$n$, functions of $x_{i}$ and $t$
+\item Boltzmann Transport Equation \pause $\rightarrow$ 
+Euler/Navier-Stokes Equations
+\pause
+\item Physics behind fluid properties illuminated by kinetic theory
+\end{itemize}
+\end{multicols}
+\Large
+%  \begin{equation*}
+% \color{red} f(\vec{r}, \vec{v}, t) = \frac{n}{(2\pi 
+% m\theta)^{3/2}}exp(-\frac{m\vert\vec{v} 
+% - \vec{U}\vert^2}{2\theta})
+% \end{equation*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Kinetic Theory and the Physics of MCT}
+ \textbf{\large Fluids with Internal Structure}
+ \begin{itemize}
+  \item New variable of interest: $\omega_{i}$ $\rightarrow$ Gyration of inner 
+structures
+  \item Total linear momentum includes this gyration: $p_{i} = m(v_{i} + 
+\epsilon_{ijk}r_{j}\omega_{k}) $
+  \item Chen accounted for gyration in Boltzmann-Curtiss distribution 
+(Chen, 2017) $\rightarrow$ Zeroth-order equations matched inviscid 
+\textbf{Morphing Continuum Theory} (MCT) equations 
+\pause
+\item Boltzmann-Curtiss transport equation
+ \end{itemize}
+\small
+  \begin{equation*}
+  (\frac{\partial}{\partial t} + v_{i} \frac{\partial}{\partial x_{i}} + 
+\frac{M_i}{I}\frac{\partial}{\partial \Phi_i})f = 
+(\frac{\partial f}{\partial t})_{coll}
+ \end{equation*}
+ Here, $\Phi_i$ is the orientation of a particle, $M_i$ is the angular 
+momentum, and $I$ is the moment inertia. With spherical particles, 
+$\frac{\partial}{\partial \Phi_i} = 0$, yielding:
+  \begin{equation*}
+  (\frac{\partial}{\partial t} + v_{i} \frac{\partial}{\partial x_{i}})f = 
+(\frac{\partial f}{\partial t})_{coll}
+ \end{equation*}
+\end{frame}
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+ \begin{multicols}{2}
+ \begin{figure}
+ \includegraphics[width=.85\linewidth]{PhaseSpace.png}
+\end{figure}
+ Additional rotation changes dimensionality of the phase space \\
+ \vspace{5mm}
+Number density $$n = \int \int d^3v' d^3\omega' \ f$$ 
+Any integral of a quantity in this phase space will include effects of particle 
+rotation
+\end{multicols}
+\end{frame}
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+ \textbf{Boltzmann-Curtiss Distribution}: Derived from Boltzmann's Principle $S 
+= kln(W)$ for system of rotating particles (Chen, 2017)
+\begin{equation*}
+%\label{BoltzmannCurtissSecond}
+f^{0}(x_{i}, v_{i}, \omega_{i}, t) = n(\frac{m\sqrt{j}}{2\pi 
+\theta})^3 exp(-\frac{m(v'_{j}v'_{j} + j\omega'_{p}\omega'_{p})}{2\theta})
+\end{equation*}
+\small
+\begin{multicols}{2}
+\begin{itemize}
+\item $S$: Total entropy of the system
+\item $k$: Boltzmann's constant
+\item $W$: Number of microstates consistent with given macrostate
+\item $m$: Mass of a particle
+\item $n$: Number density of particles
+\item $j$: Microinertia of particles
+\item $\theta$: Equilibrium thermal energy, $kT$ 
+\item $v'_k$: Fluctuation in translational velocity
+\item $\omega'_{k}$: Fluctuation in particle rotation
+\end{itemize}
+\end{multicols}
+\end{frame}
+
+
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+ \textbf{\large Collisional Integral}
+  \begin{align*}
+ \label{collisionintegral}
+ (\frac{\partial f}{\partial t})_{coll} =  \int &d^3 v_2 \ d^3\omega_2 \ 
+d^3v_1' \ d^3\omega_1' \ d^3v_2' \ d^3\omega_2' \ \delta^4(P_f - 
+P_i)\left|T_{fi}\right|^2 \\ &(f_2'f_1' - f_2 f_1)
+\end{align*}
+ \begin{multicols}{2}
+ \begin{figure}
+  \includegraphics[width=\linewidth]{BinaryCollision.png}
+ \end{figure}
+\begin{itemize}
+\small
+\item $P_{f}$: Total Final Momentum  
+\item $P_{i}$: Total Initial Momentum
+\item $T_{fi}$: Transition Matrix
+\item Particles 1 and 2 collide in binary collision
+\item Unprimed quantities correspond to initial conditions
+\item Primed quantities correspond to final conditions
+\end{itemize}
+\end{multicols}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+ \textbf{\large Conservation Equation}
+ Let $\chi(x_i, p_i)$ be a conserved quantity in a binary collision whose total 
+value is preserved before and after the collision, i.e.:
+\begin{equation*}
+ \chi_1 + \chi_2 = \chi_1' + \chi_2'
+\end{equation*}
+The Boltzmann Equation can be integrated with respect to this conserved 
+property, yielding:
+\begin{equation*}
+  \frac{\partial }{\partial t} \langle n\chi
+\rangle + \frac{\partial}{\partial x_{i}} \langle n
+\frac{p_{i}}{m}\chi
+\rangle - n \langle \frac{p_{i}}{m}\frac{\partial \chi}{\partial x_{i}}
+\rangle = 0
+\end{equation*}
+where
+\begin{equation*}
+  \langle A \rangle = \frac{1}{n} \int \int A f(x_{i}, v_{i}, \omega_{i}, t) 
+d^3v' d^3\omega'
+\end{equation*}
+The RHS, $\langle \frac{\partial f}{\partial t}_{coll} \chi \rangle $, vanishes 
+due to the symmetry, (Huang, 1987) $$\langle \textbf{p}'_2, \textbf{p}'_1 
+|T|\textbf{p}_1, \textbf{p}_2\rangle = \langle -\textbf{p}'_2, 
+-\textbf{p}'_1 |T| -\textbf{p}_1,-\textbf{p}_2\rangle$$
+\end{frame}
+
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+ \textbf{\large Conservation Laws}\\
+ \vspace{2mm}
+ Obtained by letting $\chi$ equal any quantity conserved in the binary 
+collision, i.e. $\chi_1 + \chi_2 = \chi_1' + \chi_2'$ \\
+ \begin{align*}
+ \centering
+ \small
+\label{firstordercont}
+&\textbf{Continuity} \ \Big(\chi_1 = m\Big) \nonumber \\
+&\frac{\partial }{\partial t}\langle mn
+\rangle + \frac{\partial }{\partial x_i}\langle mnv_i
+\rangle = 0 \\
+\label{firstordermoment}
+&\textbf{Linear Momentum} \ \Big(\chi_2 = m(v_i + 
+\epsilon_{ipl}r_l\omega_p)\Big) \nonumber \\
+&\frac{\partial}{\partial t}\langle mn v_i
+\rangle + \frac{\partial }{\partial t}\langle mn 
+\epsilon_{ipl}r_{l}\omega_{p}
+\rangle + \frac{\partial}{\partial x_{l}}\langle mn v_iv_l
+\rangle + 
+\\ &\frac{\partial }{\partial x_s}\langle mn\epsilon_{ipl} v_s r_{l}\omega_{p}
+\rangle = 0 
+\nonumber \\
+\end{align*}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+ \textbf{\large Conservation Laws}\\
+\begin{align*}
+\centering
+\label{firstorderangmoment}
+&\textbf{Angular Momentum} \ \Big(\chi_3 = mr_ir_p\omega_p \Big) \nonumber \\
+&\frac{\partial}{\partial t}\langle mn r_{i}r_{p}\omega_p
+\rangle + 
+\frac{\partial}{\partial x_{l}}\langle mn r_{i}r_{p}\omega_pv_l
+\rangle = 0 \\
+\label{firstordereenergy}
+&\textbf{Energy} \ \Big(\chi_4 = m(e + \frac{1}{2}[v'_lv'_l + 
+r_pr_q\omega'_p\omega'_q])\Big) \nonumber \\
+&\frac{\partial}{\partial t}(mn e) + \frac{\partial}{\partial 
+x_{i}}(mnev_i)   + \frac{\partial}{\partial x_{i}}\frac{1}{2}\langle mn 
+v'_{l}v'_{l}v'_{i} + r_{p}r_{q}\omega'_{p}\omega'_{q}v'_{i}
+\rangle - \\  &  
+mn\langle v_{i}\frac{\partial e}{\partial x_{i}}
+\rangle = 0 \nonumber
+ \end{align*}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+ Applying the principles $\langle v'\rangle = \langle \omega'\rangle = 0$ and 
+$\langle \epsilon_{ipl} v_s r_{l}W_{p} \rangle = 0$, assuming no external 
+torque on the system (Baraff, 1997). Letting $i_{pq} = r_pr_q$.
+  \begin{align*}
+\label{firstordercont2}
+&\textbf{Continuity} \nonumber \\
+&\frac{\partial }{\partial t}\rho + \frac{\partial }{\partial 
+x_l}(\rho U_l) = 0 \\
+\label{firstordermoment2}
+&\textbf{Linear Momentum} \nonumber \\ 
+&\frac{\partial}{\partial t}(\rho U_s)  + \frac{\partial}{\partial x_l}(\rho 
+U_sU_l) + \frac{\partial }{\partial x_l}(\rho \langle v'_s v'_l
+\rangle + \langle \rho 
+\epsilon_{spq} v'_l r_{q}\omega'_{p}
+\rangle) = 0\\
+\label{firstorderangmoment2}
+&\textbf{Angular Momentum} \nonumber \\ 
+&\frac{\partial}{\partial t}(\rho i_{sp}W_p) + 
+\frac{\partial}{\partial x_{l}}(\rho i_{sp}W_pU_l) + \frac{\partial}{\partial 
+x_{l}}(\rho \langle i_{sp}\omega'_p v'_l
+\rangle) = 0 \\ \nonumber 
+\label{firstordereenergy2}
+&\textbf{Energy} \nonumber \\ 
+&\frac{\partial}{\partial t}(\rho e) + \frac{\partial}{\partial 
+x_{l}}(\rho eU_l)   + \frac{\partial}{\partial x_{l}}\frac{1}{2}\langle \rho 
+v'_{s}v'_{s}v'_{l} + i_{pq}\omega'_{q}\omega'_{p}v'_{l}
+\rangle  -  
+\rho \langle v_{l}\frac{\partial e}{\partial x_{l}}
+\rangle = 0 
+\end{align*}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+For spherical particles $i_{pq} = i_{pp} = \frac{3j}{2}$, where $j$ is termed 
+the microinertia (Chen, 2017).
+  \begin{align*}
+\label{firstordercont3}
+&\textbf{Continuity} \nonumber \\
+&\frac{\partial }{\partial t}\rho + \frac{\partial }{\partial 
+x_l}(\rho U_l) = 0 \\
+\label{firstordermoment3}
+&\textbf{Linear Momentum} \nonumber \\ 
+&\frac{\partial}{\partial t}(\rho U_s)  + \frac{\partial}{\partial x_l}(\rho 
+U_sU_l) + \frac{\partial }{\partial x_l}(\rho \langle v'_s v'_l
+\rangle + \langle \rho 
+\epsilon_{spq} v'_l r_{q}\omega'_{p}
+\rangle) = 0\\
+\label{firstorderangmoment3}
+&\textbf{Angular Momentum} \nonumber \\ 
+&\frac{\partial}{\partial t}(\frac{3\rho jW_s}{2}) + 
+\frac{\partial}{\partial x_{l}}(\frac{3\rho jW_sU_l}{2}) + 
+\frac{\partial}{\partial 
+x_{l}}\rho\langle\frac{3 j\omega'_s v'_l}{2}
+\rangle = 0 \\ \nonumber 
+\label{firstordereenergy3}
+&\textbf{Energy} \nonumber \\ 
+&\frac{\partial}{\partial t}(\rho e) + \frac{\partial}{\partial 
+x_{l}}(\rho eU_l)   + \frac{\partial}{\partial x_{l}}\frac{1}{2}\langle \rho 
+v'_{s}v'_{s}v'_{l} + \frac{3j\omega'_{p}\omega'_{p}v'_{l}}{2}
+\rangle  -  
+\rho \langle v_{l}\frac{\partial e}{\partial x_{l}}
+\rangle = 0 
+\end{align*}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+ Conservation equations give formulations for key forces derived by integration:
+ \begin{align*}
+   &\textbf{Heat} \ \textbf{Flux}\\
+q_{\alpha} &= \frac{1}{2}\langle \rho v'_{l}v'_{l}v'_{\alpha} + 
+\frac{3j\omega'_{p}\omega'_{p}v'_{\alpha}}{2}
+\rangle \\
+&\textbf{Boltzmann} \ \textbf{Stress}\\
+t^\text{Bol}_{\alpha \beta} &= -\rho \langle v'_\alpha v'_\beta
+\rangle \\
+&\textbf{Curtiss} \ \textbf{Stress}\\
+t^\text{Cur}_{\alpha \beta} &= - \rho \langle v'_\alpha 
+\epsilon_{\beta pq}r_{q}\omega'_{p}
+\rangle \\
+&\textbf{Moment} \ \textbf{Stress}\\
+m_{\alpha \beta} &= -\rho \langle \frac{3j\omega'_\beta v'_\alpha}{2}
+\rangle
+ \end{align*}
+\end{frame}
+
+\begin{frame}
+\frametitle{Kinetic Theory and the Physics of MCT}
+Evaluation of Stress and Heat Flux Tensors: Zeroth Order (Chen, 2017)
+\small
+\begin{align*}
+\begin{split}
+ \label{zeroheatfluxkinetic}
+q^{0}_{\alpha} &= \frac{m\rho}{2n}\int (v_l'v_l'v_\alpha' + 
+j\omega'_p\omega'_pv_\alpha') (\frac{m\sqrt{j}}{2\pi\theta})^3 
+ exp(-\frac{m(v'^2 + j\omega'^2)}{2\theta})\ 
+d^3v'd^3\omega' \\ &= \mathbf{0}
+\end{split}
+\\
+\begin{split}
+ \label{zeroBoltzmannstress}
+t^{\text{Bol}, 0}_{\alpha \beta} &= -\rho\int 
+v_\alpha'v_\beta' 
+(\frac{m\sqrt{j}}{2\pi\theta})^3 
+exp(-\frac{m(v'^2 + j\omega'^2)}{2\theta}) d^3v' d^3 
+\omega' \\ 
+&= \mathbf{-n}\bm{\theta\delta_{\alpha \beta}}
+\end{split}
+\\
+\begin{split}
+ \label{zeroCurtissstress} 
+t^{\text{Cur}, 0}_{\alpha \beta} &= -\rho\epsilon_{\beta 
+pq}r_{p}\int 
+\omega_q'v_{\alpha}' 
+(\frac{m\sqrt{j}}{2\pi\theta})^3 exp(-\frac{m(v'^2 + 
+j\omega'^2)}{2\theta}) d^3v' d^3 \omega'\\ 
+&= \mathbf{0} 
+\end{split}
+\\
+\begin{split}
+ \label{zeromomentstress}
+ m^0_{\alpha \beta} &= -\frac{3\rho j}{2} \int 
+\omega_{\beta}'v_{\alpha}' (\frac{m\sqrt{j}}{2\pi\theta})^3 
+exp(-\frac{m(v'^2 + j\omega'^2)}{2\theta}) d^3v' d^3 \omega' 
+\\ &= \mathbf{0} 
+\end{split}
+\end{align*}
+\pause
+$\rightarrow$ \textbf{Note}: Terms of the form, $\langle v`^{n}\omega'^{m}f^{0} 
+\rangle = 0$ when either $n$ or $m$ is odd.
+\end{frame}
+
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+Letting $g(x_i, v_i, \omega_i, t) = f(x_i, v_i, \omega_i, t) - f^{0}(x_i, v_i, 
+\omega_i, t)$:
+ \begin{equation*}
+ \begin{split}
+(\frac{\partial f}{\partial t})_{coll} = &\int d^3 v_2 \ d^3\omega_2 \ d^3v_1' 
+\ d^3 \omega_1' \ d^3v_2' \ d^3\omega_2' \ \delta^4(P_f - 
+P_i)\left|T_{fi}\right|^2\\  &[(f'^{0}_2 + g'_2)(f'^{0}_1 + g'_1) - (f^{0}_2 + 
+g_2)(f^{0}_1 + g_1)]
+\end{split}
+ \end{equation*}
+Noting that all equilibrium distributions are the same, and excluding quadratic 
+terms:
+\begin{equation*}
+\begin{split}
+ (\frac{\partial f}{\partial t})_{coll} \approx &\int d^3 p_2 \ d^3p_1' \ 
+d^3p_2' \ \delta^4(P_f - P_i)\left|T_{fi}\right|^2\\  & (f'^{0}_2g'_1 - 
+f^{0}_2g_1 + f'^{0}_1g'_2 - g_2 f^{0}_1)
+ \end{split}
+\end{equation*}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+ Order of magnitude determined from evaluation of a typical term:
+\begin{equation*}
+ -g_1 \int d^3 v_2 \ d^3\omega_2 \ d^3 v_1' \ d^3 \omega_1' \ 
+d^3v_2' \ d^3\omega_2' \delta^4(P_f - P_i)\left|T_{fi}\right|^2 f_2^{0} = 
+-\frac{g}{\tau}
+\end{equation*}
+ \large 
+Therefore the effect of the collisions on the distribution is approximated 
+using a single time constant known as \textit{relaxation time}:
+\begin{equation*}
+(\frac{\partial f}{\partial t})_{coll} \approx - \frac{g}{\tau} 
+\end{equation*}
+Departures from equilibrium for either of the variables occur over $\tau$ 
+before equilibrium is reached \pause $\rightarrow$ \textbf{Experimentally 
+determined} \\
+\pause
+\vspace{2mm}
+For $H_2$ mixture, at $p = 1$ atm and $T= 77K$, $\tau_{rot} = 2.20 
+\times 10^{-8}s$ (Montero, 2014)
+\end{frame}
+
+\begin{frame}
+  \frametitle{Kinetic Theory and the Physics of MCT}
+  Boltzmann Equation With Collisional Term
+  \begin{equation*}
+\label{FirstOrderTransport}
+ g = -\tau (\frac{\partial}{\partial t} + v_{i} \frac{\partial}{\partial 
+x_{i}})(f^{0} + g)
+\end{equation*}
+Assume $g << f^{0}$
+\begin{equation*}
+ \label{FirstOrderTransportSimple}
+  g = -\tau (\frac{\partial}{\partial t} + v_{i} \frac{\partial}{\partial 
+x_{i}})f^{0}
+\end{equation*}
+Equation contains spatial and temporal derivatives but $f^{0}$ depends on these 
+variables implicitly \pause $\rightarrow$ Need derivatives of explicit terms in 
+function
+\begin{equation*}
+%\label{BoltzmannCurtissSecond}
+f^{0}(x_{i}, v_{i}, \omega_{i}, t) = n(\frac{m\sqrt{j}}{2\pi 
+\theta})^3 exp(-\frac{m(v'_{j}v'_{j} + j\omega'_{p}\omega'_{p})}{2\theta})
+\end{equation*}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Kinetic Theory and the Physics of MCT}
+ Using chain rule
+\begin{equation*}
+ g = -\tau(D(\rho)\frac{\partial f^0}{\partial \rho} + D(U_{i})\frac{\partial 
+f^0}{\partial U_i} + D(W_i)\frac{\partial f^0}{\partial W_i} + 
+D(\theta)\frac{\partial f^{0}}{\partial \theta})
+\end{equation*}
+where $D(\chi) = (\frac{\partial }{\partial t} + v_i\frac{\partial}{\partial 
+x_i})\chi$, is the material derivative. Material derivatives found from zeroth 
+order balance laws:\\
+\pause
+\begin{align*}
+\label{zeroordercontMCT}
+	\frac{\partial\rho}{\partial t} + \frac{\partial \rho U_l}{\partial 
+x_l} = 0 &\rightarrow  D(\rho)=v_l'\frac{\partial}{\partial 
+x_l}\rho-\rho\frac{\partial 
+U_q}{\partial x_q}\\
+\label{zeroordermomentMCT}
+	\frac{\partial}{\partial t}(\rho U_s)+  \frac{\partial }{\partial 
+x_{l}}(\rho U_lU_s)
+=-\frac{\partial }{\partial x_s} (n\theta) &\rightarrow D(U_i)= 
+v_l'\frac{\partial}{\partial x_l}U_i-\frac{1}{\rho}\frac{\partial 
+}{\partial x_i} (n\theta)\\
+\label{zeroorderangmomentMCT}
+	\frac{\partial}{\partial t}(\rho jW_s) + \frac{\partial }{\partial 
+x_l} (\rho jW_sU_l)
+= 0 &\rightarrow D(W_i) = v_l'\frac{\partial}{\partial 
+x_l}W_i \\
+\label{zeroordereenergyMCT}
+	\frac{\partial}{\partial t}(n\theta)+ \frac{\partial }{\partial x_l} 
+(n\theta U_l)
+=-\frac{n\theta}{3} \frac{\partial U_q}{\partial x_q} &\rightarrow 
+D(\theta)=v_l'\frac{\partial}{\partial x_l}\theta-\frac{1}{3}\theta 
+\frac{\partial U_q}{\partial x_q}
+\end{align*}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+ \Large \textbf{First-Order Distribution Function}
+ \normalsize
+ \begin{equation*}
+\label{gfull}
+\begin{split}
+g=-\tau f^{(0)}&[\frac{1}{\rho}(v_i'\frac{\partial \rho}{\partial x_i} -\rho 
+\frac{\partial U_i}{\partial x_i}) 
+- (\frac{3}{\theta}- 
+\frac{m(v'^2+j\omega'^2)}{2\theta^2})(v'_{i}\frac{\partial \theta}{\partial 
+x_i} - 
+\frac{\theta}{3} \frac{\partial U_q}{\partial x_q}) \\ &+  
+(\frac{mv'_i}{\theta})(v_l'\frac{\partial U_i}{\partial x_l} 
+-\frac{1}{\rho}\frac{\partial}{\partial x_i}(n\theta)) + 
+(\frac{mj\omega_i'}{\theta})(v_l'\frac{\partial W_i}{\partial x_l})]
+\end{split}
+\end{equation*}
+\\ 
+\pause
+\Large
+Now have distribution function need for finding \textbf{first-order} 
+approximations to stresses and heat flux
+\end{frame}
+
+\begin{frame}
+\frametitle{Kinetic Theory and the Physics of MCT}
+Evaluation of Stress and Heat Flux Tensors: \textbf{First-Order Heat Flux}
+\begin{align*}
+ \begin{split}
+ \label{heatMCTsurface}
+ q^1_{\alpha} = &\frac{m\rho}{2n}\int (v_l'v_l'v_\alpha' + 
+j\omega'_p\omega'_pv_\alpha') \ g \ 
+d^3v'd^3\omega'  \\
+&= \bm{-(4n\tau\theta)\frac{\partial \theta}{\partial x_\alpha}} 
+\end{split}
+\end{align*}
+\pause
+\textbf{Note 1}: Heat flux fits form of \textbf{Fourier's Law}:
+\begin{equation*}
+ q_{\alpha} = -K\frac{\partial \theta}{\partial x_{\alpha}}
+\end{equation*}
+\pause
+\textbf{Note 2}: Volumetric integrals are presumed to have \textit{spherical 
+symmetry} i.e. $$\int \int d^3 v' \ d^3\omega' = (4\pi)^2 \int \int v'^2 \ 
+\omega '^2 \ dv' \ d\omega'$$
+\end{frame}
+
+\begin{frame}
+\frametitle{Kinetic Theory and the Physics of MCT}
+\textbf{First-Order Boltzmann Stress}
+\begin{align*}
+\begin{split}
+ \label{surfaceBoltzmann}
+ t^{\text{Bol},1}_{\alpha \beta} &= -\rho\int 
+v_\alpha'v_\beta' \ g \ d^3v' \ d^3 \omega'   \\
+&= \bm{ n\tau\theta(\frac{\partial U_\alpha}{\partial x_\beta} 
++ \frac{\partial U_\beta}{\partial x_\alpha}) - 
+\frac{n\tau\theta}{3}(\frac{\partial U_l}{\partial x_l} \delta_{\alpha \beta}) }
+\end{split}
+\end{align*}
+\normalsize
+\pause
+\textbf{Note 1}: Form matches classical dissipative stress:
+\begin{equation*}
+ t^{d}_{\alpha \beta} = \mu (\frac{\partial U_{\alpha}}{\partial 
+x_{\beta}} + \frac{\partial U_{\beta}}{\partial x_{\alpha}}) + \lambda 
+\frac{\partial U_{l}}{\partial x_{l}}\delta_{\alpha \beta}
+\end{equation*}
+\pause
+\textbf{Note 2}: Zeroth order Boltzmann stress previously supplied a term 
+related to pressure via \textbf{ideal gas law}
+\begin{equation*}
+ t^{Bol, 0}_{\alpha \beta} = n\theta \delta_{\alpha \beta}
+\end{equation*}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Kinetic Theory and the Physics of MCT}
+Evaluation of Stress and Heat Flux Tensors: \textbf{First-Order Curtiss Stress}
+\begin{align*}
+\begin{split}
+ \label{surfaceCurtiss}
+ t^{\text{Cur},1}_{\alpha \beta} &= -\rho\epsilon_{\beta 
+pq}r_{p}\int \omega_q'v_{\alpha}' \
+g \ d^3v' \ d^3 \omega' \\
+ &= \bm{(n\tau\theta) \epsilon_{\beta pq}r_q \frac{\partial W_p}{\partial 
+x_\alpha}} 
+\end{split}
+\end{align*}
+\pause
+\textbf{Note 1}: No classical counterpart for this stress $\rightarrow$ Unique 
+because of effect of particle rotation \\
+\vspace{5mm}
+\pause
+\textbf{Note 2}: Adds effect of rotation to overall shear stress
+\end{frame}
+
+\begin{frame}
+\frametitle{Kinetic Theory and the Physics of MCT}
+Evaluation of Stress and Heat Flux Tensors: \textbf{First-Order Moment Stress}
+\small
+\begin{align*}
+\begin{split}
+ \label{surfacemoment}
+ m^1_{\alpha \beta} &= -\frac{3\rho j}{2} \int 
+\omega_{\beta}'v_{\alpha}' \ g \ d^3v' \ d^3 \omega' 
+\\ &= 
+\bm{(\frac{3n\tau j\theta}{2})\frac{\partial W_{\beta}}{\partial 
+x_\alpha}}
+\end{split}
+\end{align*}
+\\
+\pause
+\textbf{Note 1}: Also no classical analogue to this stress \\
+\vspace{5mm}
+\pause
+\textbf{Note 2}: Gyration gradient is found in moment stress in MCT, in the 
+form of $$\gamma b_{\beta \alpha} = \gamma \frac{\partial W_{\beta}}{\partial 
+x_{\alpha}}$$\\
+\vspace{5mm}
+\pause
+\textbf{Note 3}: Property $\langle v'_{\alpha} v'_{\beta} \rangle = \langle 
+v'^2 \rangle \frac{\delta_{\alpha \beta}}{3}$ is employed
+\end{frame}
+
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+First-Order Stresses + Body Forces $\rightarrow$ Boltz. Eq.
+\pause
+\footnotesize
+ \begin{align*}
+%\label{governingContsimple}
+&\textbf{Continuity} \nonumber \\ 
+&\frac{\partial }{\partial t}\rho + \frac{\partial }{\partial x_i}(\rho U_i) = 
+0 \\
+%\label{governingLinMomentsimple}
+&\textbf{Linear Momentum} \nonumber \\ 
+&\frac{\partial}{\partial t}(\rho U_j)  + \frac{\partial}{\partial x_i}(\rho 
+U_iU_j) + \frac{\partial P}{\partial x_j} - n\tau\theta (\frac{\partial^2 
+U_j}{\partial x_i \partial x_i}) - \frac{2}{3}n\tau\theta(\frac{\partial^2 
+U_i}{\partial x_i \partial x_j}) - 
+\\ 
+& n\tau\theta\epsilon_{jkm}\frac{\partial W_m}{\partial x_k} - F_{j}= 0 
+\nonumber \\
+%\label{governingAngMomentsimple}
+&\textbf{Angular Momentum} \nonumber \\ 
+&\frac{\partial}{\partial t}(\rho j W_j) + 
+\frac{\partial}{\partial x_{i}}(\rho jW_jU_i) - 
+n\tau j\theta \frac{\partial W_j}{\partial x_i \partial x_i} - \bm{L_{j}} = 
+0 
+\nonumber\\
+%\label{governingEnergysimple}
+&\textbf{Energy} \\
+&\frac{\partial}{\partial t}(\rho e) + \frac{\partial}{\partial 
+x_{l}}(\rho eU_l)   - (4n\tau\theta)\frac{\partial^2 \theta}{\partial 
+x_{l}\partial x_l} - \rho \langle v_{l}\frac{\partial e}{\partial x_{l}}
+\rangle - \rho H = 0 
+% \label{governingEnergysimple}
+% &\textbf{Energy} \nonumber \\
+% &\frac{\partial}{\partial t}(\rho e) + \frac{\partial}{\partial 
+% x_{i}}(\rho eU_i)   - (4n\tau\theta)\frac{\partial^2 \theta}{\partial 
+% x_{i}\partial x_i} 
+%  - \rho <v_{i}\frac{\partial e}{\partial x_{i}}> = 0 
+\end{align*}
+\pause
+Additional body force $\bm{L_{j}}$ can arise from interaction with other 
+particles
+\end{frame}
+
+\begin{frame}
+\frametitle{Kinetic Theory and the Physics of MCT}
+ \textbf{\large Angular Momentum Body Force}
+ \begin{multicols}{2}
+  \begin{figure}
+  \centering
+   \includegraphics[width=65mm]{RelRotation_Polyatomic.png}
+%    \caption{COMSOL, 2017}
+  \end{figure}
+  \centering 
+  %(COMSOL, 2017)\\
+  \Large
+  \begin{itemize}
+  \item Torque experienced due to coupling of gyration and angular velocity\\
+  \item Strength of the coupling force due to $\nu$ \\
+  \end{itemize}
+   $$ L_{j} = \nu(\epsilon_{jik}U_{k,i} - 2W_{j})$$
+ \end{multicols}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+ \textbf{MCT}
+ \begin{align*}
+\frac{\partial}{\partial t}(\rho U_j)  &+ \frac{\partial}{\partial x_i}(\rho 
+U_iU_j) + \frac{\partial P}{\partial x_j} \\ &- {\color{blue}(\lambda + 
+\mu)\frac{\partial^2 U_i}{\partial x_i \partial x_j}} - 
+{\color{ao(english)}(\mu + 
+\kappa)\frac{\partial^2 U_j}{\partial x_i\partial x_i}} - {\color{red}\kappa 
+\epsilon_{jlm}\frac{\partial W_m}{\partial x_l}} - F_{j} = 0
+\end{align*}
+\textbf{Advanced Kinetic Theory}
+\begin{align*}
+ %\label{governingLinMomentrestate2}
+\frac{\partial}{\partial t}(\rho U_j)  &+ \frac{\partial}{\partial x_i}(\rho 
+U_iU_j) + \frac{\partial P}{\partial x_j} \\ 
+&- {\color{blue}\frac{2}{3}n\tau\theta\frac{\partial^2 U_i}{\partial x_i 
+\partial x_j}} - {\color{ao(english)}n\tau\theta \frac{\partial^2 U_j}{\partial 
+x_i \partial x_i}} -  {\color{red}n\tau\theta\epsilon_{jlm}\frac{\partial 
+W_m}{\partial x_l}} - F_{j} = 0
+\end{align*}
+\pause
+\textbf{Note}: Equal weighting of gyration gradient and velocity Laplacian in 
+Kinetic Approach, \textbf{not} in MCT
+\end{frame}
+
+\begin{frame}
+\frametitle{Kinetic Theory and the Physics of MCT}
+ \textbf{Navier-Stokes}
+\begin{align*}
+\frac{\partial}{\partial t}(\rho U_j)  &+ \frac{\partial}{\partial x_i}(\rho 
+U_iU_j) + \frac{\partial P}{\partial x_j} \\ &- (\lambda + 
+\mu)\frac{\partial^2 U_i}{\partial x_i \partial x_j} - \mu\frac{\partial^2 
+U_j}{\partial x_i\partial x_i} - \rho F_{j} = 0
+\end{align*}
+\textbf{Advanced Kinetic Theory}
+\begin{align*}
+% \label{governingLinMomentrestate}
+\frac{\partial}{\partial t}(\rho U_j)  &+ \frac{\partial}{\partial x_i}(\rho 
+U_iU_j) + \frac{\partial P}{\partial x_j} \\ 
+&- \frac{2}{3}n\tau\theta\frac{\partial^2 U_i}{\partial x_i 
+\partial x_j} - n\tau\theta \frac{\partial^2 
+U_j}{\partial x_i \partial x_i} -  
+{\color{red}n\tau\theta\epsilon_{jlm}\frac{\partial W_m}{\partial x_l}} - 
+\rho F_{j} 
+= 0
+\end{align*}
+\textbf{Note}: Like MCT, Kinetic Approach adds single term from gyration to 
+linear momentum equation
+\end{frame}
+
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+ \textbf{Type I N-S Equation}: Derived using Boltzmann Distribution Function 
+(Huang, 2017)
+  \begin{align*}
+\begin{split}
+&\frac{\partial}{\partial t}(\rho U_s)  + \frac{\partial}{\partial x_l}(\rho 
+U_sU_l) + \frac{\partial P}{\partial x_s} - 
+{\color{blue} n\tau\theta\frac{\partial^2 
+U_s}{\partial x_l \partial x_l}} - 
+{\color{ao(english)} \frac{n\tau\theta}{3}\frac{\partial^2 U_l}{\partial x_l 
+x_s} } - \rho F_{s} = 0
+\end{split}
+\end{align*}
+\textbf{Reduced Kinetic Theory}: Setting $W_m = 0$
+\begin{equation*}
+% \label{governingLinMomentrestate}
+\frac{\partial}{\partial t}(\rho U_s) + \frac{\partial}{\partial x_l}(\rho 
+U_sU_l) + \frac{\partial P}{\partial x_s} - {\color{blue} n\tau\theta 
+\frac{\partial^2 U_s}{\partial x_l \partial x_l} } - {\color{ao(english)} 
+ \frac{2}{3}n\tau\theta\frac{\partial^2 U_l}{\partial x_l 
+\partial x_s}} - \rho F_{s} = 0
+\end{equation*}
+\pause
+\textbf{Form} of equations matches N-S but a departure in the coefficients is 
+observed \pause $\rightarrow$ System still contains $\omega'_{i}$, which 
+affects stresses 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+ \textbf{Type I N-S Equation}
+ \begin{align*}
+\begin{split}
+&\frac{\partial}{\partial t}(\rho U_s)  + \frac{\partial}{\partial x_l}(\rho 
+U_sU_l) + \frac{\partial P}{\partial x_s} - 
+{\color{blue} n\tau\theta\frac{\partial^2 
+U_s}{\partial x_l \partial x_l}} - 
+{\color{ao(english)} \frac{n\tau\theta}{3}\frac{\partial^2 U_l}{\partial x_l 
+x_s} } - \rho F_{s} = 0
+\end{split}
+\end{align*}
+\textbf{Type II N-S Equation}: From B-C Distribution and {\color{red}$W_{m} = 
+\frac{1}{2}\epsilon_{mab}\frac{\partial U_{b}}{\partial x_a}$}
+\begin{align*}
+&\frac{\partial}{\partial t}(\rho U_s)  + \frac{\partial}{\partial x_l}(\rho 
+U_sU_l) + \frac{\partial P}{\partial x_s} - 
+{\color{blue} \frac{n\tau \theta}{2}\frac{\partial^2 U_s}{\partial x_l \partial 
+x_l}} - 
+{\color{ao(english)} \frac{7n\tau \theta}{6}\frac{\partial^2 U_{p}}{\partial 
+x_s \partial x_p}} - 
+\rho F_s = 0
+\end{align*}
+\pause
+\textbf{Observation}: Contribution of particle rotation still present even when 
+local and macroscopic rotation are equivalent \pause $\rightarrow$ Presence of 
+mean gyration, $W_m$, affects final form of expressions for coefficients 
+\end{frame}
+
+
+% \begin{frame}
+%  \frametitle{Turbulence Modeled by MCT}
+%  \begin{figure}
+%   \includegraphics[width=.77\linewidth]{Slide40.png}
+%  \end{figure}
+% 
+% \end{frame}
+
+% \begin{frame}
+% \frametitle{Calculation of Parameters}
+% \Large
+% Expressions for viscous diffusion, rotational Cauchy stress depend on number 
+% density $n$, equilibrium temperature $\theta$, and relaxation time $\tau$\\
+% \medskip
+% $n$, $\theta$ can be measured in the fluid relatively easily\\
+% \medskip 
+% \pause
+% $\rightarrow$ \textbf{Relaxation time}, $\tau$, is more difficult to assess due 
+% to the need to achieve translational and gyrational equilibrium
+% \end{frame}
+
+% \begin{frame}
+%  \frametitle{Kinetic Theory and the Physics of MCT}
+%  \textbf{Relaxation Time}\\
+%  \begin{itemize}
+%   \item Additional degrees of freedom from gyration complicate discussion of 
+% physics behind $\tau$
+% \pause
+% \item For isotropic fluids, asymmetry in stress tensor proportional to 
+% $\epsilon_{jik}v_{k,i} - 2\omega_{j}$ (De Groot and Mazur, 1962) 
+% $\rightarrow$ \textbf{Departure from equilibrium}
+% \pause
+% \item Characteristic time in decay of gyration to angular velocity found in 
+% considering motion of fluid as a rigid body (De Groot and Mazur, 1962) 
+% $$\frac{d\omega_j}{dt} = -\frac{\kappa}{\rho j}(2\omega_j - 
+% \epsilon_{jik}v_{k,i}) ; \ \  \omega_{j} = \frac{1}{2}\epsilon_{jik}v_{k,i} (1 
+% - e^{-\frac{t}{\tau}})$$
+% % \item In short time scales, when departure of $\omega_{i}$ can be resolved, 
+% % relaxation of internal rotation can be tracked
+% \pause
+% \item Relaxation time for this motion has the expression (De Groot and Mazur, 
+% 1962; Evans and Streett, 1978) $$\tau = \frac{\rho j}{2\kappa}$$
+% % \item Numerical simulations of MCT where fluid moves like a rigid body can show 
+% % whether this is a good approximation for $\tau$
+%  \end{itemize}
+% \end{frame}
+
+\begin{frame}
+ \frametitle{Kinetic Theory and the Physics of MCT}
+ \begin{figure}
+  \includegraphics[width=.9\linewidth]{KineticMap.jpg}
+ \end{figure}
+
+\end{frame}
+
+\begin{frame}
+ \frametitle{Assessing the Equations: Numerical Results of MCT}
+ \textbf{Incompressible Flow over Flat Plate}: \\
+ Roughness Boundary Condition Imposed: $\omega = -\nabla \times \textbf{v}$
+ \begin{figure}
+  \includegraphics[width=\linewidth]{FlatPlateSetup.png}
+ \end{figure}
+\end{frame}
+\begin{frame}
+ \frametitle{Assessing the Equations: Numerical Results of MCT}
+ \small
+ Incompressible simulations capture velocity profiles from ERCOFTAC for 
+leading-edge boundary layer $Re = \frac{\rho U_{\infty}L_{plate}}{\mu + 
+\kappa} = 10^6$ with $\rho = 1$ normalized. \\ (ERCOFTAC, 1990).
+ \begin{multicols}{2}
+ \centering
+ \textbf{Transitional}
+  \begin{figure}
+   \includegraphics[width = .9\linewidth]{transition.jpg}
+  \end{figure}
+  \centering
+  \textbf{Turbulent}
+\begin{figure}
+ \includegraphics[width = .9\linewidth]{turbulent.jpg}
+ \end{figure}
+ \end{multicols}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Assessing the Equations: Numerical Results of MCT}
+ \textbf{Dimensionless Parameters from MCT}\\
+ \Large
+ \begin{itemize}
+ \item Peddieson found dimensionless parameters that led to aspects of 
+turbulence (Peddieson, 1972)
+ \pause
+ \item These parameters follow from non-dimensional forms of MCT (Wonnell, 2017)
+ \pause
+ \item Key parameter involves coupling coefficient and traditional viscosity
+$$\frac{\kappa}{\mu}$$ 
+ \pause
+ \item Ratio of contribution to Cauchy stress from gyration gradient to 
+classical viscous diffusion 
+\end{itemize}
+\end{frame}
+\begin{frame}
+\frametitle{Assessing the Equations: Numerical Results of MCT}
+ \begin{table}[h!]
+\centering
+ \begin{tabular}{||c c c||} 
+ \hline
+ Parameter & Transitional & Turbulent \\ [0.7ex] 
+ \hline\hline
+ $ \kappa$ & $9.6 \times 10^{-6}$ & $9.9 \times 10^{-6}$ \\ 
+ $ \gamma$ & $2.2 \times 10^{-13}$ & $4.7 \times 10^{-14}$ \\
+ ${\color{red} \frac{\kappa}{\mu}}$ & {\color{red} 24 } & {\color{red} 99} \\
+ $\frac{\kappa}{\rho\sqrt{j}U_{\infty}}$ & 0.00135 & 0.0014 \\
+ ${\color{blue} \frac{\gamma}{\mu j}}$  & 0.275 & 0.235 \\ [1ex] 
+ \hline
+ \end{tabular}
+\label{table:material}
+\end{table}
+\pause
+\Large
+Physics of transition and turbulence driven by $\kappa >> \mu$ 
+\pause $\rightarrow$ \textbf{Consistent with Kinetic Approach}\\
+\pause
+$\gamma$ is weighted by the traditional viscosity, $\mu$, and microinertia, $j$ 
+\pause $\rightarrow$ \textbf{Also consistent with Kinetic Approach}
+\end{frame}
+
+\begin{frame}
+\frametitle{Assessing the Equations: Numerical Results of MCT}
+Turbulent Fluctuations Flow past a Cylinder with Turb. KE Spectrum, i.e. 
+$\frac{1}{2}\rho j \omega^2$: $$E(k) \simeq (\frac{k}{k_{o}})^4 u_{o}^2 
+e^{-2(\frac{k}{k_{o}})^2}$$
+\begin{multicols}{2}
+\begin{table}[h!]
+\centering
+ \begin{tabular}{||c | c||} 
+ \hline
+ Parameter & Value \\ [2ex] 
+ \hline\hline
+ ${\color{red}\alpha_{1} = \frac{\kappa}{\mu}}$ & 99 \\ 
+ $\alpha_{2} = \frac{\kappa}{\rho \sqrt{j}U_{\infty}}$ & 0.0014 \\ 
+ $\alpha_{3} = \frac{\gamma}{\mu j}$ & 0.235 \\ 
+ $M_{t} = \frac{u_{o}}{c}$      & 0.14\\ 
+ $Re = \frac{\rho_{\infty} u_{o}}{\mu k_{o}}$ & 16.7 \\ 
+ $M_{\infty}$ & 2\\ 
+ $L$ & 10 m\\ 
+ \hline
+ \end{tabular}
+\end{table}
+\begin{figure}
+\includegraphics[width = \linewidth]{Cylinder_48k_drawing.jpg}
+\end{figure}
+\end{multicols}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Assessing the Equations: Numerical Results of MCT}
+ Mach 2 Flow Past a Cylinder $\rightarrow$ Same Material Parameters as 
+Incomp. Flow \pause $\rightarrow$ Relation $\kappa >> \mu$, \textbf{also found 
+by Kinetic Approach}, gave meaningful turb. compressible data \pause
+ \begin{multicols}{2}
+\begin{figure}
+ \centering
+  \includegraphics[width = 
+.8\linewidth]{GyrationSpectrumComparisonArrow.jpg}
+\end{figure}
+\begin{figure}
+  \includegraphics[width = 
+.8\linewidth]{TranslationMagnitudeComparisonArrow.jpg}
+\end{figure}
+\end{multicols}
+\small
+Small wavelength eddies lose energy in interaction with shock wave and a 
+transfer of energy is observed to translational kinetic energy (TKE) for low 
+wavenumbers \pause $\rightarrow$ \textbf{inverse energy cascade}. 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Assessing the Equations: Numerical Results of MCT}
+ Transonic Flow over an Axisymmetric Hill
+  \begin{figure}
+   \includegraphics[width=.8\linewidth]{InternalMesh.png}
+  \end{figure}
+ \end{frame}
+\begin{frame}
+ \frametitle{Assessing the Equations: Numerical Results of MCT}
+ Inlet Turbulent BL Profiles Set to DNS Data (Castagna, 2012), but matched 
+closely with experimental data (Simpson, 2002)
+ \begin{multicols}{2}
+  \begin{figure}
+   \includegraphics[width=\linewidth]{Inlet_Profile_Simpson_DNS.jpg}
+  \end{figure}
+\begin{figure}
+ \includegraphics[width=\linewidth]{RMS_Velocity_Plots.jpg}
+\end{figure}
+ \end{multicols}
+\end{frame}
+ \begin{frame}
+ \frametitle{Assessing the Equations: Numerical Results of MCT}
+ \begin{table}[h!]
+ \begin{tabular}{||c | c||} 
+ \hline 
+ Parameter & Value \\  [.5ex]
+ \hline
+ ${\color{red}\alpha_{1} = \frac{\kappa}{\mu}}$ & 99 \\
+ $\alpha_{2} = \frac{\kappa}{\rho \sqrt{j}U_{\infty}}$  & 0.0014 \\
+ $\alpha_{3} = \frac{\gamma}{\mu j}$ & 0.235 \\  
+ $\delta_{inlet}$ & 0.039 m \\
+ $H_{bump}$ & 0.078 m \\
+ $M_{\infty} = \frac{U_{\infty}}{c} $      & 0.6\\
+ $Re = \frac{\rho_{\infty} U_{\infty}H}{\mu + \kappa}$ & 6709\\
+ $N_{cells}$ & $\mathbf{4.5509 \times 10^6}$ \\ \hline
+ \end{tabular}
+\end{table}
+\pause
+$\rightarrow$ \textbf{Castagna's mesh}: $5.4 \times 
+10^7$ cells (Castagna, 2014)\\
+\vspace{2mm}
+\pause
+Turbulence parameters continually rely on $\kappa >> \mu$, consistent with 
+findings of \textbf{Kinetic Theory}\\
+\end{frame}
+
+\begin{frame}
+\frametitle{Assessing the Equations: Numerical Results of MCT}
+Surface Pressure Data\pause $\rightarrow$ \textit{Validation} of turbulent MCT 
+simulation with experimental data
+\begin{figure}
+ \centering
+  \includegraphics[width=.5\linewidth]{Transonic_Bump_C_p_Comparison.jpg}
+\end{figure}
+\pause
+Turbulent Boundary Layer led to better surface pressure data, and separation of 
+the BL on the windward side of the bump
+\end{frame}
+
+\begin{frame}
+ \frametitle{Assessing the Equations: Numerical Results of MCT}
+ \Large
+\textbf{Inflow turbulence} with $\kappa >> \mu$ $\rightarrow$ Periodic Vortices
+\animategraphics[autoplay,loop,width=\linewidth]{12}
+{Vortices_Animation.}{0478}{0498}
+%\mediabutton[jsaction={anim.myAnim.playFwd();}]{\fbox{\strut Play}}
+%\mediabutton[jsaction={anim.myAnim.pause();}]{\fbox{\strut Pause}}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Discussion}
+ \large
+ \begin{itemize}
+  \item Kinetic theory takes \textit{discrete} approach to fluid flows \pause
+$\rightarrow$ Any framework is an approximation of a continuous body
+\pause
+\item Understanding flows with local rotation from discrete approach gives a 
+deeper physical basis for resulting equations and expressions
+\pause
+\item Presumed single \textbf{relaxation time} and single \textbf{equilibrium 
+temperature} for all motions
+\pause
+\item Actual physical particles will not be perfect spheres \pause 
+$\rightarrow$ Model should improve as particles approach spherical shape
+\pause
+\pause
+\item Relaxation time requires numerical and experimental data to validate 
+ \end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Conclusion and Future Work}
+\begin{itemize}
+ \item First-order approximation to Boltzmann-Curtiss equations yields 
+equations that match the form of the MCT equations
+\pause
+\item Cauchy stress and viscous diffusion weighted equally by coefficient 
+$n\tau\theta$
+\pause
+\item MCT data suggest $\kappa >> \mu$ and $\gamma \sim \mu j$, confirming 
+findings by Kinetic Theory
+\pause
+\item Meaningful data from incompressible profiles, and validation with exp. 
+data in MCT with $\kappa >> \mu$
+\pause
+\item Direct simulations of kinetic theory first step to testing their 
+effectiveness
+\pause
+\item Simulations of hypersonic and turbulent flows in MCT and kinetic 
+description $\rightarrow$ Validate kinetic theory expressions for MCT stresses 
+and coefficients
+\end{itemize}
+\end{frame}
+
+
+
+% \begin{frame}
+% \textnormal
+% Presumes fluid to be a \textbf{morphing continuum}: A set of finite size 
+% structures that possess their own independent subscale motion, $\xi$, 
+% apart from their macromotion, $x$. The subscale motion possesses its own 
+% orientation, $\chi$, independently from its macromotion orientation, $k$. 
+% \frametitle{Morphing Continuum Theory}
+% \begin{multicols}{2}
+% \begin{figure}
+% \includegraphics[width=\linewidth]{mctdirectors.png}
+% \end{figure}
+% \large
+% \textbf{Kinematics}
+% \begin{equation*} %\label{direc1}
+% %\begin{split}
+% \centering
+% {\it x_{k} = x_{k} (X_{K},t)}
+% \quad
+% {\it  X_{K} = X_{K} (x_{k},t)}
+% \end{equation*}
+% \begin{equation*} %\label{direc2}
+% \centering
+% {\it \xi_{k} = \chi_{kK}(X_{K},t)\Xi_{K}}
+% \quad
+% {\it \Xi_{K} =  \bar{\chi}_{Kk}\xi_{k}}
+% \end{equation*}
+% \begin{equation*} %\label{direc3}
+% \centering
+% {\it K = 1, 2, 3} 
+% \quad
+% {\it  k = 1, 2, 3 }
+% \end{equation*}
+% \textbf{Deformation Rates}
+% \begin{equation*}
+%  a_{kl}  = v_{l,k} + \epsilon_{lkm}\omega_{m}
+% \end{equation*}
+% \begin{equation*}
+%  b_{kl} = \omega_{k,l}
+% \end{equation*}
+% 
+% \end{multicols}
+% \end{frame}
+% \begin{frame}
+% \frametitle{MCT: Balance Laws}
+% \centering
+% \begin{multicols}{2}
+% %\begin{equation}
+% \textbf{Continuity}
+% $$\frac{\partial \rho}{\partial t} + (\rho v_{i})_{,i} = 0$$\\
+% %\end{equation}
+% %\begin{equation}
+% \textbf{Linear Momentum}
+% $$t_{lk,l} + \rho f_{k} =  \rho {\dot{v}}_{ k} $$\\
+% %\end{equation}
+% %\begin{equation}
+% %\end{equation} 
+% \textbf{Angular Momentum}
+% $$ m_{lk,l} + \epsilon_{kij}t_{ij} + \rho l_{k} = \rho j\dot{\omega}_{ k}$$\\
+% %\begin{equation}
+% \textbf{Energy}
+% $$\rho \dot{e} - t_{kl}a_{kl} - m_{kl}b_{lk} + q_{k,k} - \rho h = 0$$\\
+% \end{multicols}
+% \begin{multicols}{2}
+% \begin{itemize}
+% \item $t_{lk}$: Cauchy stress 
+% \item $m_{lk}$: Moment stress 
+% \item $j$: Microinertia of eddies
+% \item $a_{bkl}, b_{kl}$: Defomation Rates
+% \item $q_{k}$: Heat flux
+% \item $h$: Energy source density
+% \item $e$: Internal energy density
+% \end{itemize}
+% \end{multicols}
+% %\end{equation} 
+% \end{frame}
+% \begin{frame}
+% \frametitle{MCT: Constitutive Equations}
+% \small
+% Stresses, heat flux now depend upon deformation of eddies as well. 
+% Constitutive equations derived from thermodynamics for isotropic 
+% fluids.
+% \begin{multicols}{2}
+% \centering
+% \textbf{\large Cauchy Stress}
+% \normalsize
+% $$t_{kl} = -P\delta_{kl} + \lambda tr(a_{mn})\delta_{kl} + (\mu + {\color{blue}\kappa})a_{kl} + \mu a_{lk} $$\\
+% \textbf{\large Moment Stress}
+% \normalsize
+% {\color{violet}$$m_{kl} = \frac{\alpha_{T}}{\theta} \epsilon_{klm} \theta_{,m} + \alpha tr(b_{mn})\delta_{kl} + \beta b_{kl} + \gamma b_{lk} $$}\\
+% \textbf{\large Heat Flux}
+% \normalsize
+% $$q_{k} = \frac{K}{\theta}\theta_{,k} + 
+% {\color{red}\alpha_{T}\epsilon_{klm}\omega_{m,l} } $$\\
+% \textbf{\large Deformation Rates}
+% $$ a_{kl}  = v_{l,k} + {\color{magenta}\epsilon_{lkm}\omega_{m}}$$
+% {\color{violet}$$ b_{kl} = \omega_{k,l} $$}
+% \end{multicols}
+% \end{frame}
+% \begin{frame}
+% \frametitle{MCT: Governing Equations}
+% \small
+% Now have independent equation governing \textbf{gyration} of 
+% eddies. Coupling coefficient $\color{blue} \kappa$ ties eddy rotation to linear 
+% momentum equation. 
+% \vfill
+% \centering
+% \textbf{Linear Momentum}
+% \normalsize
+% $$-P_{,k} + (\lambda + \mu)v_{l,lk} + (\mu + {\color{blue}\kappa})v_{k,ll} + {\color{blue}\kappa\epsilon_{klm}\omega_{l,m}} = \rho\dot{v}_{k}$$ \\
+% \textbf{\color{violet}Angular Momentum}
+% \normalsize
+% $$\it (\alpha + \beta)\omega_{l,lk} + \gamma \omega_{k,ll} + 
+% {\color{blue}\kappa(\overbrace{\epsilon_{klm}v_{l,m} - 
+% 2\omega_{k})}^{{\color{black}Absolute \ Rotation}}} = \rho j\dot{\omega}_{k}  
+% $$\\
+% \pause
+% \textbf{Energy}
+% $$({\color{blue}t_{kl}}v_{l})_{,k} + {\color{violet}(m_{kl}\omega_{l})_{,k}} - q_{k,k} + \rho h  = \rho{\color{cyan}\dot{E}} $$ \\
+% \textnormal
+% where $E = e + \frac{1}{2}(v_{l}v_{l} + {\color{cyan}j\omega_{l}\omega_{l}})$ 
+% now contains turbulent kinetic energy. 
+% \end{frame}
+% \begin{frame}
+%  \frametitle{MCT: Success with Incompressible Turbulence}
+%  \large
+%  Simulations capture velocity profiles from ERCOFTAC for leading-edge 
+% boundary layer $Re = 10^6$ (ERCOFTAC, 1990).
+%  \begin{multicols}{2}
+%  \centering
+%  \textbf{Transitional}
+%   \begin{figure}
+%    \includegraphics[width = \linewidth]{transition.jpg}
+%   \end{figure}
+%   \centering
+%   \textbf{Turbulent}
+% \begin{figure}
+%  \includegraphics[width = \linewidth]{turbulent.jpg}
+% \end{figure}
+% 
+%  \end{multicols}
+% 
+% \end{frame}
+% \begin{frame}
+% \frametitle{Numerical Setup}
+% Dimensionless parameters chosen according to values used successfully for 
+% incompressible turbulence. Balance of eddy contribution to Cauchy stress with 
+% viscous diffusion, captured by $\color{red} \alpha_{1}$, critical for 
+% generation of turbulent flow.
+% \begin{multicols}{2}
+% \begin{table}[h!]
+% \centering
+%  \begin{tabular}{||c | c||} 
+%  \hline
+%  Parameter & Value \\ [2ex] 
+%  \hline\hline
+%  ${\color{red}\alpha_{1} = \frac{\kappa}{\mu}}$ & 99 \\ 
+%  $\alpha_{2} = \frac{\kappa}{\rho \sqrt{j}U_{\infty}}$ & .0014 \\ 
+%  $\alpha_{3} = \frac{\gamma}{\mu j}$ & .235 \\ 
+%  $M_{t} = \frac{u_{o}}{c}$      & .14\\ 
+%  $Re = \frac{\rho_{\infty} u_{o}}{\mu k_{o}}$ & 16.7 \\ 
+%  $M_{\infty}$ & 2\\ 
+%  $L$ & 10 m\\ 
+%  \hline
+%  \end{tabular}
+% \end{table}
+% \begin{figure}
+% \includegraphics[width = \linewidth]{Cylinder_48k_drawing.jpg}
+% \end{figure}
+% \end{multicols}
+% \end{frame}
+% 
+% \begin{frame}
+% \frametitle{Energy Spectrum}
+% \large
+% \begin{itemize}
+% \item Monitor turbulent kinetic energy, embodied by the term $\frac{1}{2}\rho 
+% j(\omega_{z})^2$
+% \item Implement gyration $\omega_{z}$ at inlet as a sine wave of form $Asin(\nu t)$
+% \item Set magnitude of gyration to $\frac{u_{o}}{\sqrt{j}}$ where $u_{o}$ is 
+% the RMS velocity set by $M_{t}$
+% \item Choose spectrum used by Lee et al to model low-Re ($\frac{\rho_{\infty} 
+% u_{o}}{\mu k_{o}}$) turbulence (Lee, 1997)
+% \end{itemize}
+% $$E(k) \simeq (\frac{k}{k_{o}})^4 u_{o}^2 e^{-2(\frac{k}{k_{o}})^2}$$\\
+% \begin{itemize}
+% \item Here $k_{o} = 4$ is the maximum energy wavenumber
+% \item $k = \frac{\nu}{U_{\infty}}$ is generated by random number generator
+% \end{itemize}
+% \end{frame}
+% \begin{frame}
+% \frametitle{Results: Energy Spectra}
+% \begin{multicols}{2}
+% \begin{figure}
+%  \centering
+%   \includegraphics[width = 
+% .8\linewidth]{GyrationSpectrumComparisonArrow.jpg}
+% \end{figure}
+% \begin{figure}
+%   \includegraphics[width = 
+% .8\linewidth]{TranslationMagnitudeComparisonArrow.jpg}
+% \end{figure}
+% \end{multicols}
+% Small wavelength eddies lose energy in interaction with shock wave and a 
+% transfer of energy is observed to translational kinetic energy (TKE) for low 
+% wavenumbers \pause $\rightarrow$ \textbf{inverse energy cascade}.
+% \end{frame}
+% \begin{frame}
+%  \frametitle{Eddy Amplification}
+%  \begin{multicols}{2}
+%  \begin{figure}
+%   \includegraphics[width = \linewidth]{PressureContour.jpg}  
+%  \end{figure}
+%  \begin{figure}
+%   \includegraphics[width = \linewidth]{AbsoluteRotationAmplify.jpg}
+%  \end{figure}
+% \end{multicols}
+% \begin{multicols}{2}
+% \begin{figure}
+%  \includegraphics[width = .8\linewidth]{PressureXcoordinate.jpg}
+% \end{figure} 
+% Sharp increases in pressure result in development of eddy structure and 
+% geometry. Size and shape of individual eddies after the shock can be discerned 
+% through the absolute rotation ($\epsilon_{klm}v_{l,m} - 
+% 2\omega_{k}$).
+% \end{multicols}
+% \end{frame}
+% \begin{frame}
+% \frametitle{Eddy Dissipation}
+% \begin{multicols}{2}
+% \begin{figure}
+% \centering
+% \includegraphics[width = \linewidth]{AbsoluteRotationEddyDissipation.jpg}
+% \end{figure}
+% \begin{figure}
+% \centering
+%  \includegraphics[width= \linewidth]{LogPressureContourEddyDissipation.jpg}
+% \end{figure}
+% \end{multicols}
+% Logarithmic scale used for pressure contours. Sharp drops in pressure show 
+% lines of eddy dissipation. Angle of eddy disspation of approximately 14 
+% degrees formed after the shock.
+% \end{frame}
+% \begin{frame}
+% \frametitle{Conclusion}
+% \large
+% \begin{itemize}
+% \item MCT introduced to capture multiscale interactions between eddies and 
+% shock wave
+% \pause
+% \item Spectra show interaction for wide range of eddy sizes
+% \pause
+% \item Spike in post-shock TKE means eddies transferred energy \pause
+% $\rightarrow$ \textbf{inverse energy cascade}
+% \pause
+% \item Eddy rotation noticeably amplified after shock \pause $\rightarrow$ N-S 
+% equations break down after shock
+% \pause
+% \item Eddy dissipation lines form when sharp declines in pressure exist
+% \end{itemize}
+% \end{frame}
+\begin{frame}
+ \frametitle{Publications}
+ \textbf{Articles}
+ \tiny
+\begin{enumerate}
+ \item Louis B. Wonnell, and James Chen. "A First-Order Approximation to the
+Boltzmann-Curtiss Equations for Flows with Local Spin," Under Review
+\item Louis B. Wonnell, Mohamad I. Cheikh and James Chen. ``A Morphing 
+Continuum 
+Simulation of Transonic Flow over an Axisymmetric Hill,'' Under Review
+\item Mohamad Ibrahim Cheikh, Louis B. Wonnell, and James Chen. "Morphing 
+continuum analysis of energy transfer in compressible turbulence." 
+\textit{Physical Review Fluids} \textbf{3}, no. 2 (2018): 024604.
+\item Louis B. Wonnell, and James Chen. "Morphing Continuum Theory: 
+Incorporating the Physics of Microstructures to Capture the Transition to 
+Turbulence Within a Boundary Layer." \textit{Journal of Fluids Engineering} 
+\textbf{139}, no. 1 (2017): 011205. 
+\item Louis B. Wonnell, and James Chen. "Extension of Morphing Continuum Theory 
+to Numerical Simulations of Transonic Flow over a Bump." \textit{Proceedings of 
+the 47th AIAA Fluid Dynamics Conference}, AIAA 2017-3461
+\item Louis B. Wonnell, and James Chen. "A Morphing Continuum Approach to 
+Compressible Flows: Shock Wave-Turbulent Boundary Layer Interaction." 
+\textit{Proceedings of the 46th AIAA Fluid Dynamics Conference}, AIAA 2016-4279.
+\end{enumerate}
+\normalsize
+\textbf{Conference Works}
+\tiny
+\begin{enumerate}
+\item Louis B. Wonnell, Mohamad Ibrahim Cheikh, and James Chen. "Morphing 
+Continuum Theory: A First Order Approximation to the Balance Laws." 70th Annual 
+Meeting of the APS Division of Fluid Dynamics. Denver, CO. November 19-21, 2017.
+\item Louis B. Wonnell, and James Chen. "Extension of Morphing Continuum Theory 
+to Numerical Simulations of Transonic Flow over a Bump." 47th AIAA Fluid 
+Dynamics Conference. Denver, CO. June 5-9, 2017.
+\item Louis B. Wonnell, and James Chen. "A Morphing Continuum Approach to 
+Compressible Flows: Shock Wave-Turbulent Boundary Layer Interaction." 46th AIAA 
+Fluid Dynamics Conference. Washington, D.C. June 13-17, 2016.
+\item James Chen, and Louis Wonnell. "A Multiscale Morphing Continuum 
+Description for Turbulence." 68th Annual Meeting of the APS Division of Fluid 
+Dynamics. Boston, MA. November 22-24, 2015.
+\end{enumerate}
+
+
+\end{frame}
+
+
+\begin{frame}
+\Huge{\centerline{Thank you for your attention}}
+\centering
+\begin{multicols}{2}
+\begin{figure}
+ \includegraphics[width=\linewidth]{AFOSR.png}
+\end{figure}
+
+\begin{figure}
+ \includegraphics[width=\linewidth]{MCPL.jpg}
+\end{figure}
+\end{multicols}
+\large
+\centering
+\textbf{James Chen}: jmchen@ksu.edu\\
+\textbf{Louis Wonnell}: lwonnell@ksu.edu.
+\end{frame}
+
+%----------------------------------------------------------------------------------------
+
+\end{document} 
